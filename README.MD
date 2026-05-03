@@ -18,13 +18,19 @@ Create a python environment
 conda create whisper_env python=3.11.0
 ```
 
- ## Files 
- wavconverter.py script to convert MP3/M4A/etc formats to wav formats 
+## Convert mp3/M4A/etc Files to WAV format 
+wavconverter.py script to convert MP3/M4A/etc formats to wav formats 
 
+Note out is output directory. 
+``` {sh}
+python wavconverter.py hello_quiet.m4a out\Quiet.wav
+```
 
- ``` {sh}
- python wavconverter.py hello_quiet.m4a out\Quiet.wav
- ```
+Use Transcribe script to transcribe text
+```{sh}
+python transcribe.py out\basil_hello.wav
+```
+
 ### On windows you can use Sound recorder app to record M4A files
 
 Code taken from [Local whisperer | KDNuggets](https://www.kdnuggets.com/local-whisper-audio-transcription)

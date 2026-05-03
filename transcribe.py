@@ -34,5 +34,3 @@ if __name__ == "__main__":
 
     wav_file = sys.argv[1]
     transcription = transcribe_audio(wav_path=wav_file, model_size="small", device='cpu')
-    print("\nFull Transcription:")
-    print(transcription)
