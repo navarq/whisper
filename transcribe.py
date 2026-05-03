@@ -1,5 +1,4 @@
 from faster_whisper import WhisperModel
-import ctranslate2
 import sys
 import os
 from dotenv import load_dotenv
