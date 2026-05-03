@@ -16,11 +16,8 @@ def transcribe_audio(wav_path, model_size="base", device="cpu"):
     login(token=HUGGING)
     # Initialize the model (downloads automatically on first user)
     print(f"Loading Whisper model '{model_size}' on device '{device.upper()}'...")
-    model = WhisperModel(model_size=model_size, model_path=wav_path, local_files_only=True, device=device, compute_type="int8")
-    #model = ctranslate2.models.Whisper(model_path=wav_path, device=device, device_index=0, compute_type="int8", intra_threads=0)
-
-    # Run the Transcription, "en" means English language. You can specify other languages or None for auto-detection.
-    segments, info = model.transcribe(model_path=wav_path, device=device, beam_size=5, language="en")
+    model = WhisperModel(model_size, device=device, compute_type="int8")
+    segments, info = model.transcribe(wav_path, beam_size=5, language="en")
 
     print(f"Detected language: {info.language} (probability {info.language_probability:.2f})")
     print("Transcription:")
@@ -37,6 +34,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     wav_file = sys.argv[1]
-    transcription = transcribe_audio(wav_file, model_size="small.en", device='cpu')
+    transcription = transcribe_audio(wav_path=wav_file, model_size="small", device='cpu')
     print("\nFull Transcription:")
     print(transcription)

@@ -6,7 +6,7 @@
 
 Assuming using miniconda from Anaconda.org
 
-CREATE an .env file
+CREATE an .env file (contents)
 ```
 HUGGING=hf_<YOUR_TOHEN_HERE>
 ```
