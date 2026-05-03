@@ -15,7 +15,9 @@ Usage (requires python version 3.11)
 
 Create a python environment 
 ```{sh}
-conda create whisper_env python=3.11.0
+conda create -n whisper_env python=3.11.0
+
+conda activate whisper_env
 ```
 
 ## Convert mp3/M4A/etc Files to WAV format 
