@@ -1,5 +1,9 @@
 from faster_whisper import WhisperModel
+import ctranslate2
 import sys
+import os
+from dotenv import load_dotenv
+from huggingface_hub import login
 
 def transcribe_audio(wav_path, model_size="base", device="cpu"):
     """
@@ -7,11 +11,16 @@ def transcribe_audio(wav_path, model_size="base", device="cpu"):
     model_size can be one of: tiny, base, small, medium, large-v2, large-v3
     device="cpu" or "cuda" (if GPU is available)
     """    
+    load_dotenv()
+    HUGGING = os.getenv("HUGGING")
+    login(token=HUGGING)
     # Initialize the model (downloads automatically on first user)
-    model = WhisperModel(model_size, device=device, commute_type="int8")
+    print(f"Loading Whisper model '{model_size}' on device '{device.upper()}'...")
+    model = WhisperModel(model_size=model_size, model_path=wav_path, local_files_only=True, device=device, compute_type="int8")
+    #model = ctranslate2.models.Whisper(model_path=wav_path, device=device, device_index=0, compute_type="int8", intra_threads=0)
 
     # Run the Transcription, "en" means English language. You can specify other languages or None for auto-detection.
-    segments, info = model.transcribe(wav_path, beam_size=5, language="en")
+    segments, info = model.transcribe(model_path=wav_path, device=device, beam_size=5, language="en")
 
     print(f"Detected language: {info.language} (probability {info.language_probability:.2f})")
     print("Transcription:")
@@ -19,7 +28,7 @@ def transcribe_audio(wav_path, model_size="base", device="cpu"):
         print(f"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}")
 
     # Return the full transcription text
-    full_text = " ".join(seg.text for seg in segments)
+    full_text = " ".join([seg.text for seg in segments])
     return full_text
 
 if __name__ == "__main__":
@@ -28,6 +37,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     wav_file = sys.argv[1]
-    transcription = transcribe_audio(wav_file, model_size='base', device='cpu')
+    transcription = transcribe_audio(wav_file, model_size="small.en", device='cpu')
     print("\nFull Transcription:")
     print(transcription)

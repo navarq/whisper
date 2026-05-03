@@ -6,6 +6,11 @@
 
 Assuming using miniconda from Anaconda.org
 
+CREATE an .env file
+```
+HUGGING=hf_<YOUR_TOHEN_HERE>
+```
+
 Usage (requires python version 3.11)
 
 Create a python environment 
